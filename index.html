@@ -1,0 +1,102 @@
+# Countdown-d
+高考倒计时网页
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>高考倒计时</title>
+  <style>
+    /* 可爱粉紫色系主题 */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f9c5d1 0%, #f7aef8 100%);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 40px 60px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      color: #6a1b9a;
+      font-size: 2.5em;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+
+    #countdown {
+      font-size: 2em;
+      color: #4a148c;
+      line-height: 1.6;
+    }
+
+    .unit {
+      display: inline-block;
+      min-width: 120px;
+      padding: 15px;
+      margin: 10px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+        margin: 10px;
+      }
+      .unit {
+        min-width: 80px;
+        font-size: 0.8em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>⏳ 高考倒计时</h1>
+    <div id="countdown"></div>
+  </div>
+
+  <script>
+    // 设置高考日期（假设2025年6月7日）
+    const gaokaoDate = new Date('2025-06-07T09:00:00');
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = gaokaoDate - now;
+
+      if (diff < 0) {
+        document.getElementById('countdown').innerHTML = "🎉 高考结束啦！";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById('countdown').innerHTML = `
+        <div class="unit">${days} 天</div>
+        <div class="unit">${hours} 小时</div>
+        <div class="unit">${minutes} 分钟</div>
+        <div class="unit">${seconds} 秒</div>
+      `;
+    }
+
+    // 立即执行一次，之后每秒更新
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
